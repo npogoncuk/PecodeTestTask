@@ -5,8 +5,8 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.nazar.pecodetesttask.R
-import com.nazar.pecodetesttask.ViewPagerHost
+import com.nazar.pecodetesttask.INotificationHandler
+import com.nazar.pecodetesttask.IViewPagerHost
 import com.nazar.pecodetesttask.databinding.FragmentNotificationBinding
 
 
@@ -20,6 +20,7 @@ class NotificationFragment : Fragment() {
     private val binding: FragmentNotificationBinding
         get() = _binding!!
 
+    private lateinit var notificationHandler: INotificationHandler
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
@@ -28,6 +29,8 @@ class NotificationFragment : Fragment() {
         savedInstanceState?.let {
             number = it.getInt(ARG_NUMBER)
         }
+
+        notificationHandler = INotificationHandler.Default(requireContext())
     }
 
     override fun onCreateView(
@@ -39,13 +42,17 @@ class NotificationFragment : Fragment() {
         with(binding) {
             numberTextView.text = number.toString()
 
-            val viewPagerHost = activity as? ViewPagerHost
+            val viewPagerHost = activity as? IViewPagerHost
 
             goToNextButton.setOnClickListener {
                 viewPagerHost?.swipeRight()
             }
             goToPreviousButton.setOnClickListener {
                 viewPagerHost?.swipeLeft()
+                notificationHandler.cancelAllNotifications(number!!)
+            }
+            sendNotificationButton.setOnClickListener {
+                notificationHandler.sendNotification(number!!)
             }
 
             if (number == 1) {

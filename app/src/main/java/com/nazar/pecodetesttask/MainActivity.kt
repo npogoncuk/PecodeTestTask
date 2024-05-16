@@ -1,5 +1,9 @@
 package com.nazar.pecodetesttask
 
+import android.app.NotificationChannel
+import android.app.NotificationManager
+import android.content.Context
+import android.os.Build
 import android.os.Bundle
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
@@ -8,15 +12,18 @@ import androidx.core.view.WindowInsetsCompat
 import com.nazar.pecodetesttask.databinding.ActivityMainBinding
 import com.nazar.pecodetesttask.view_pager.ViewPagerAdapter
 
-class MainActivity : AppCompatActivity(), ViewPagerHost {
+class MainActivity : AppCompatActivity(), IViewPagerHost {
 
     private lateinit var binding: ActivityMainBinding
+    private lateinit var viewPagerHost: IViewPagerHost
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
 
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        viewPagerHost = IViewPagerHost.Default(binding.pager)
+
         ViewCompat.setOnApplyWindowInsetsListener(binding.pager) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
@@ -26,25 +33,26 @@ class MainActivity : AppCompatActivity(), ViewPagerHost {
         binding.pager.adapter = ViewPagerAdapter(this)
     }
 
-    private var pagerCurrentItem: Int
-        get() = binding.pager.currentItem
-        set(value) {
-            if (value < 0) return
-            binding.pager.currentItem = value
+
+    private fun createNotificationChanelInNeeded(channelId: Int) {
+        fun createNotificationChannel(): NotificationChannel {
+            val name = "chanel_name"//getString(R.string.channel_name)
+            val descriptionText = "description"//getString(R.string.channel_description)
+            val importance = NotificationManager.IMPORTANCE_DEFAULT
+            val channel = NotificationChannel(channelId.toString(), name, importance)
+            return channel
         }
 
-    override fun swipeRight() {
-        pagerCurrentItem++
+        val notificationManager: NotificationManager =
+            getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+
+        notificationManager.getNotificationChannel(channelId.toString()) ?: run {
+            val newChanel = createNotificationChannel()
+            notificationManager.createNotificationChannel(newChanel)
+        }
     }
 
-    override fun swipeLeft() {
-        pagerCurrentItem--
-    }
+    override fun swipeLeft() = viewPagerHost.swipeLeft()
+    override fun swipeRight() = viewPagerHost.swipeRight()
 
-}
-
-interface ViewPagerHost {
-    fun swipeRight()
-
-    fun swipeLeft()
 }
