@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">PecodeTestTask</string>
+    <string name="default_notification_title">You created a notification</string>
+    <string name="default_notification_text">Notification %d</string>
 </resources>

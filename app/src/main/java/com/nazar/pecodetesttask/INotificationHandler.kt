@@ -19,9 +19,9 @@ interface INotificationHandler {
             createNotificationChanelInNeeded(channelId)
 
             val notification = NotificationCompat.Builder(context, channelId.toString())
-                .setSmallIcon(android.R.drawable.ic_dialog_info)
-                .setContentTitle("textTitle")
-                .setContentText("textContent")
+                .setSmallIcon(R.drawable.default_notification_icon)
+                .setContentTitle(context.getString(R.string.default_notification_title))
+                .setContentText(context.getString(R.string.default_notification_text, channelId))
                 .build()
 
             notificationManager.notify(channelId, notification)

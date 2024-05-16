@@ -33,25 +33,6 @@ class MainActivity : AppCompatActivity(), IViewPagerHost {
         binding.pager.adapter = ViewPagerAdapter(this)
     }
 
-
-    private fun createNotificationChanelInNeeded(channelId: Int) {
-        fun createNotificationChannel(): NotificationChannel {
-            val name = "chanel_name"//getString(R.string.channel_name)
-            val descriptionText = "description"//getString(R.string.channel_description)
-            val importance = NotificationManager.IMPORTANCE_DEFAULT
-            val channel = NotificationChannel(channelId.toString(), name, importance)
-            return channel
-        }
-
-        val notificationManager: NotificationManager =
-            getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
-
-        notificationManager.getNotificationChannel(channelId.toString()) ?: run {
-            val newChanel = createNotificationChannel()
-            notificationManager.createNotificationChannel(newChanel)
-        }
-    }
-
     override fun swipeLeft() = viewPagerHost.swipeLeft()
     override fun swipeRight() = viewPagerHost.swipeRight()
 
