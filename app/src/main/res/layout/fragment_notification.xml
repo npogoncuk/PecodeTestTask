@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:gravity="center"
+    tools:context=".view_pager.NotificationFragment">
+
+    <TextView
+        android:id="@+id/numberTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="26sp"
+        tools:text="0" />
+
+    <Button
+        android:id="@+id/goToNextButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="+" />
+
+    <Button
+        android:id="@+id/goToPreviousButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="-" />
+
+    <Button
+        android:id="@+id/sendNotificationButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Send notification" />
+
+</LinearLayout>
