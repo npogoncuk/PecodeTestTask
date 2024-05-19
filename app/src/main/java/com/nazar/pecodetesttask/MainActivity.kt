@@ -18,7 +18,7 @@ class MainActivity : AppCompatActivity(), IViewPagerHost {
     private val backPressedCallback = object : OnBackPressedCallback(true) {
         override fun handleOnBackPressed() {
             if (viewPagerHost.canSwipeLeft) swipeLeft()
-            else finish()
+            else finishAndRemoveTask()
         }
     }
 
@@ -42,8 +42,9 @@ class MainActivity : AppCompatActivity(), IViewPagerHost {
 
         onBackPressedDispatcher.addCallback(this, backPressedCallback)
 
-        intent.extras?.getInt(INotificationHandler.pendingIntentExtrasPageKey, -1)?.takeIf { it != -1 }?.let { pageToOpen ->
+        intent?.extras?.getInt(INotificationHandler.pendingIntentExtrasPageKey, -1)?.takeIf { it != -1 }?.let { pageToOpen ->
             viewPagerStateSaver.saveCurrentPageNumber(pageToOpen)
+            intent = null
         }
     }
 

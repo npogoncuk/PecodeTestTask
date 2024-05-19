@@ -40,6 +40,7 @@ interface INotificationHandler {
                 .setContentTitle(context.getString(R.string.default_notification_title))
                 .setContentText(context.getString(R.string.default_notification_text, channelId + 1))
                 .setContentIntent(pendingIntent)
+                .setAutoCancel(true)
                 .build()
 
             notificationManager.notify(channelId, notification)
