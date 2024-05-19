@@ -41,6 +41,10 @@ class MainActivity : AppCompatActivity(), IViewPagerHost {
         binding.pager.adapter = ViewPagerAdapter(this)
 
         onBackPressedDispatcher.addCallback(this, backPressedCallback)
+
+        intent.extras?.getInt(INotificationHandler.pendingIntentExtrasPageKey, -1)?.takeIf { it != -1 }?.let { pageToOpen ->
+            viewPagerStateSaver.saveCurrentPageNumber(pageToOpen)
+        }
     }
 
     override fun swipeLeft() = viewPagerHost.swipeLeft()

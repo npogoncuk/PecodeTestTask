@@ -8,6 +8,8 @@ interface IViewPagerStateSaver {
 
     fun getCurrentPageNumber(): Int
 
+    fun clearSavedState()
+
     class SharedPrefImpl(context: Context) : IViewPagerStateSaver {
 
         private val sharedPref = context.getSharedPreferences(VIEW_PAGER_STATE_SHARED_PREF, Context.MODE_PRIVATE)
@@ -15,13 +17,18 @@ interface IViewPagerStateSaver {
         override fun saveCurrentPageNumber(number: Int) {
             sharedPref.edit()
                 .putInt(CURRENT_PAGE_NUMBER_KEY, number)
-                .apply()
+                .commit()
         }
 
         override fun getCurrentPageNumber(): Int {
             return sharedPref.getInt(CURRENT_PAGE_NUMBER_KEY, 0)
         }
 
+        override fun clearSavedState() {
+            sharedPref.edit()
+                .remove(CURRENT_PAGE_NUMBER_KEY)
+                .commit()
+        }
         companion object {
             const val VIEW_PAGER_STATE_SHARED_PREF = "view_pager_state"
             const val CURRENT_PAGE_NUMBER_KEY = "current_page_number"

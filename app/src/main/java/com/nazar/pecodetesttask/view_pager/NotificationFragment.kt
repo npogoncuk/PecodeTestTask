@@ -14,7 +14,9 @@ private const val ARG_NUMBER = "ARG_NUMBER"
 
 class NotificationFragment : Fragment() {
 
-    private var number: Int? = null
+    private var fragmentNumber: Int? = null
+    private val fragmentPosition: Int
+        get() = fragmentNumber!! - 1
 
     private var _binding: FragmentNotificationBinding? = null
     private val binding: FragmentNotificationBinding
@@ -24,10 +26,10 @@ class NotificationFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
-            number = it.getInt(ARG_NUMBER)
+            fragmentNumber = it.getInt(ARG_NUMBER)
         }
         savedInstanceState?.let {
-            number = it.getInt(ARG_NUMBER)
+            fragmentNumber = it.getInt(ARG_NUMBER)
         }
 
         notificationHandler = INotificationHandler.Default(requireContext())
@@ -40,7 +42,7 @@ class NotificationFragment : Fragment() {
         _binding = FragmentNotificationBinding.inflate(inflater, container, false)
 
         with(binding) {
-            numberTextView.text = number.toString()
+            numberTextView.text = fragmentNumber.toString()
 
             val viewPagerHost = activity as? IViewPagerHost
 
@@ -49,13 +51,13 @@ class NotificationFragment : Fragment() {
             }
             goToPreviousButton.setOnClickListener {
                 viewPagerHost?.swipeLeft()
-                notificationHandler.cancelAllNotifications(number!!)
+                notificationHandler.cancelAllNotifications(fragmentPosition)
             }
             sendNotificationButton.setOnClickListener {
-                notificationHandler.sendNotification(number!!)
+                notificationHandler.sendNotification(fragmentPosition)
             }
 
-            if (number == 1) {
+            if (fragmentPosition == 0) {
                 goToPreviousButton.visibility = View.GONE
             }
         }
@@ -65,7 +67,7 @@ class NotificationFragment : Fragment() {
 
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
-        outState.putInt(ARG_NUMBER, number!!)
+        outState.putInt(ARG_NUMBER, fragmentNumber!!)
     }
 
     override fun onDestroyView() {
