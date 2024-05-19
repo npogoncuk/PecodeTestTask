@@ -6,7 +6,7 @@
         <item name="android:textColor">@color/counter_text</item>
     </style>
 
-    <style name="fab_3_rounded">
+    <style name="fab_rounded">
         <item name="cornerFamily">rounded</item>
         <item name="cornerSize">50%</item>
         <item name="tint">@color/fab_text</item>

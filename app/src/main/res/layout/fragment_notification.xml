@@ -49,7 +49,7 @@
         app:layout_constraintBottom_toBottomOf="@+id/numberTextView"
         app:layout_constraintStart_toStartOf="@+id/numberTextView"
         app:layout_constraintTop_toTopOf="@+id/numberTextView"
-        app:shapeAppearanceOverlay="@style/fab_3_rounded"
+        app:shapeAppearanceOverlay="@style/fab_rounded"
         app:tint="@color/fab_text"
         tools:ignore="ImageContrastCheck" />
 
@@ -63,7 +63,7 @@
         app:layout_constraintBottom_toBottomOf="@+id/numberTextView"
         app:layout_constraintEnd_toEndOf="@+id/numberTextView"
         app:layout_constraintTop_toTopOf="@+id/numberTextView"
-        app:shapeAppearanceOverlay="@style/fab_3_rounded"
+        app:shapeAppearanceOverlay="@style/fab_rounded"
         app:tint="@color/fab_text"
         tools:ignore="ImageContrastCheck" />
 

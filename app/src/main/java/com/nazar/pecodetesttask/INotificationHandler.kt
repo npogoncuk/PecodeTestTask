@@ -7,6 +7,7 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import androidx.core.app.NotificationCompat
+import androidx.core.graphics.drawable.toBitmap
 
 interface INotificationHandler {
 
@@ -41,6 +42,7 @@ interface INotificationHandler {
                 .setContentText(context.getString(R.string.default_notification_text, channelId + 1))
                 .setContentIntent(pendingIntent)
                 .setAutoCancel(true)
+                .setLargeIcon(context.getDrawable(R.drawable.avatar)?.toBitmap())
                 .build()
 
             notificationManager.notify(channelId, notification)
