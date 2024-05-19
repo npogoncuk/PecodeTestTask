@@ -2,4 +2,10 @@
 <resources>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+    <color name="screen_background">#02AAB0</color>
+    <color name="counter_background">#49C0BD</color>
+    <color name="counter_text">@color/white</color>
+    <color name="fab_background">@color/white</color>
+    <color name="fab_text">@color/screen_background</color>
+    <color name="create_notification">#33BABF</color>
 </resources>

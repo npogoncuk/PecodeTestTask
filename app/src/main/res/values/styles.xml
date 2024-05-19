@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="CounterStyle" parent="Widget.AppCompat.TextView">
+        <item name="android:background">@drawable/counter_shape</item>
+        <item name="android:textColor">@color/counter_text</item>
+    </style>
+
+    <style name="fab_3_rounded">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">50%</item>
+        <item name="tint">@color/fab_text</item>
+    </style>
+</resources>

@@ -1,35 +1,71 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:gravity="center"
+    android:background="@color/screen_background"
     tools:context=".view_pager.NotificationFragment">
+
+
+    <TextView
+        android:id="@+id/sendNotificationButton"
+        android:layout_width="166dp"
+        android:layout_height="166dp"
+        android:layout_marginTop="143dp"
+        android:background="@drawable/oval_shape"
+        android:backgroundTint="@color/create_notification"
+        android:gravity="center"
+        android:text="@string/create_new_notification"
+        android:textColor="@color/white"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="TextContrastCheck" />
 
     <TextView
         android:id="@+id/numberTextView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        style="@style/CounterStyle"
+        android:layout_width="302dp"
+        android:layout_height="50dp"
+        android:layout_marginBottom="50dp"
+        android:contentDescription="@string/number_text_view_content_description"
+        android:gravity="center"
         android:textSize="26sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:ignore="TextContrastCheck"
         tools:text="0" />
 
-    <Button
-        android:id="@+id/goToNextButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="+" />
-
-    <Button
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/goToPreviousButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="-" />
+        android:layout_width="56dp"
+        android:layout_height="56dp"
+        android:backgroundTint="@color/fab_background"
+        android:contentDescription="@string/go_to_previous_button_content_description"
+        android:src="@drawable/shape_minus"
+        app:layout_constraintBottom_toBottomOf="@+id/numberTextView"
+        app:layout_constraintStart_toStartOf="@+id/numberTextView"
+        app:layout_constraintTop_toTopOf="@+id/numberTextView"
+        app:shapeAppearanceOverlay="@style/fab_3_rounded"
+        app:tint="@color/fab_text"
+        tools:ignore="ImageContrastCheck" />
 
-    <Button
-        android:id="@+id/sendNotificationButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Send notification" />
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/goToNextButton"
+        android:layout_width="56dp"
+        android:layout_height="56dp"
+        android:backgroundTint="@color/fab_background"
+        android:contentDescription="@string/go_to_next_button_content_description"
+        android:src="@drawable/shape_plus"
+        app:layout_constraintBottom_toBottomOf="@+id/numberTextView"
+        app:layout_constraintEnd_toEndOf="@+id/numberTextView"
+        app:layout_constraintTop_toTopOf="@+id/numberTextView"
+        app:shapeAppearanceOverlay="@style/fab_3_rounded"
+        app:tint="@color/fab_text"
+        tools:ignore="ImageContrastCheck" />
 
-</LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
