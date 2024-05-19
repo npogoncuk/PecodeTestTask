@@ -3,6 +3,9 @@ package com.nazar.pecodetesttask
 import androidx.viewpager2.widget.ViewPager2
 
 interface IViewPagerHost {
+
+    val canSwipeLeft: Boolean
+
     fun swipeRight()
 
     fun swipeLeft()
@@ -15,6 +18,8 @@ interface IViewPagerHost {
                 pager.currentItem = value
             }
 
+        override val canSwipeLeft: Boolean
+            get() = pagerCurrentItem > 0
         override fun swipeRight() {
             pagerCurrentItem++
         }

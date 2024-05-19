@@ -1,10 +1,7 @@
 package com.nazar.pecodetesttask
 
-import android.app.NotificationChannel
-import android.app.NotificationManager
-import android.content.Context
-import android.os.Build
 import android.os.Bundle
+import androidx.activity.OnBackPressedCallback
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
@@ -17,6 +14,14 @@ class MainActivity : AppCompatActivity(), IViewPagerHost {
     private lateinit var binding: ActivityMainBinding
     private lateinit var viewPagerHost: IViewPagerHost
     private lateinit var viewPagerStateSaver: IViewPagerStateSaver
+
+    private val backPressedCallback = object : OnBackPressedCallback(true) {
+        override fun handleOnBackPressed() {
+            if (viewPagerHost.canSwipeLeft) swipeLeft()
+            else finish()
+        }
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
@@ -34,10 +39,16 @@ class MainActivity : AppCompatActivity(), IViewPagerHost {
         viewPagerStateSaver = IViewPagerStateSaver.SharedPrefImpl(this)
 
         binding.pager.adapter = ViewPagerAdapter(this)
+
+        onBackPressedDispatcher.addCallback(this, backPressedCallback)
     }
 
     override fun swipeLeft() = viewPagerHost.swipeLeft()
     override fun swipeRight() = viewPagerHost.swipeRight()
+
+    override val canSwipeLeft: Boolean by lazy {
+        viewPagerHost.canSwipeLeft
+    }
 
     override fun onStart() {
         super.onStart()
@@ -49,5 +60,4 @@ class MainActivity : AppCompatActivity(), IViewPagerHost {
         // save state of viewPager in onStop because there is no guaranty that onDestroy() will be called
         viewPagerStateSaver.saveCurrentPageNumber(binding.pager.currentItem)
     }
-
 }
