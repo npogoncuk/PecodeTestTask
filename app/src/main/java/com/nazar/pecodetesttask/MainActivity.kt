@@ -11,7 +11,10 @@ import com.nazar.pecodetesttask.view_pager.ViewPagerAdapter
 
 class MainActivity : AppCompatActivity(), IViewPagerHost {
 
-    private lateinit var binding: ActivityMainBinding
+    private var _binding: ActivityMainBinding? = null
+    private val binding: ActivityMainBinding
+        get() = _binding!!
+
     private lateinit var viewPagerHost: IViewPagerHost
     private lateinit var viewPagerStateSaver: IViewPagerStateSaver
 
@@ -26,7 +29,7 @@ class MainActivity : AppCompatActivity(), IViewPagerHost {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
 
-        binding = ActivityMainBinding.inflate(layoutInflater)
+        _binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
         ViewCompat.setOnApplyWindowInsetsListener(binding.pager) { v, insets ->
@@ -42,7 +45,7 @@ class MainActivity : AppCompatActivity(), IViewPagerHost {
 
         onBackPressedDispatcher.addCallback(this, backPressedCallback)
 
-        intent?.extras?.getInt(INotificationHandler.pendingIntentExtrasPageKey, -1)?.takeIf { it != -1 }?.let { pageToOpen ->
+        intent?.extras?.getInt(INotificationHandler.PENDING_INTENT_EXTRAS_PAGE_KEY, -1)?.takeIf { it != -1 }?.let { pageToOpen ->
             viewPagerStateSaver.saveCurrentPageNumber(pageToOpen)
             intent = null
         }
@@ -64,5 +67,10 @@ class MainActivity : AppCompatActivity(), IViewPagerHost {
         super.onStop()
         // save state of viewPager in onStop because there is no guaranty that onDestroy() will be called
         viewPagerStateSaver.saveCurrentPageNumber(binding.pager.currentItem)
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        _binding = null
     }
 }

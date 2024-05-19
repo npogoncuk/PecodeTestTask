@@ -6,4 +6,5 @@
     <string name="number_text_view_content_description">Number of the screen</string>
     <string name="go_to_next_button_content_description">Go to next screen</string>
     <string name="go_to_previous_button_content_description">Go to previous screen</string>
+    <string name="channel_name">Pecode Notifications</string>
 </resources>
