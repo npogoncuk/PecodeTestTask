@@ -9,7 +9,7 @@ import androidx.core.view.WindowInsetsCompat
 import com.nazar.pecodetesttask.databinding.ActivityMainBinding
 import com.nazar.pecodetesttask.view_pager.ViewPagerAdapter
 
-class MainActivity : AppCompatActivity(), IViewPagerHost {
+class MainActivity : AppCompatActivity(), IViewPagerHost, INotificationPermissionHandler {
 
     private var _binding: ActivityMainBinding? = null
     private val binding: ActivityMainBinding
@@ -17,6 +17,7 @@ class MainActivity : AppCompatActivity(), IViewPagerHost {
 
     private lateinit var viewPagerHost: IViewPagerHost
     private lateinit var viewPagerStateSaver: IViewPagerStateSaver
+    private lateinit var notificationPermissionHandler: INotificationPermissionHandler
 
     private val backPressedCallback = object : OnBackPressedCallback(true) {
         override fun handleOnBackPressed() {
@@ -40,6 +41,7 @@ class MainActivity : AppCompatActivity(), IViewPagerHost {
 
         viewPagerHost = IViewPagerHost.Default(binding.pager)
         viewPagerStateSaver = IViewPagerStateSaver.SharedPrefImpl(this)
+        notificationPermissionHandler = INotificationPermissionHandler.Default(this, binding)
 
         binding.pager.adapter = ViewPagerAdapter(this)
 
@@ -57,6 +59,11 @@ class MainActivity : AppCompatActivity(), IViewPagerHost {
     override val canSwipeLeft: Boolean by lazy {
         viewPagerHost.canSwipeLeft
     }
+
+    override val isPermissionGranted: Boolean
+        get() = notificationPermissionHandler.isPermissionGranted
+
+    override fun requestPermission() = notificationPermissionHandler.requestPermission()
 
     override fun onStart() {
         super.onStart()
