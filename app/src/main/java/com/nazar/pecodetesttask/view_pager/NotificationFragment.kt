@@ -1,11 +1,12 @@
 package com.nazar.pecodetesttask.view_pager
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import com.nazar.pecodetesttask.INotificationHandler
+import com.nazar.pecodetesttask.INotificationPermissionHandler
 import com.nazar.pecodetesttask.IViewPagerHost
 import com.nazar.pecodetesttask.databinding.FragmentNotificationBinding
 
@@ -45,6 +46,7 @@ class NotificationFragment : Fragment() {
             numberTextView.text = fragmentNumber.toString()
 
             val viewPagerHost = activity as? IViewPagerHost
+            val permissionHandler = activity as? INotificationPermissionHandler
 
             goToNextButton.setOnClickListener {
                 viewPagerHost?.swipeRight()
@@ -54,7 +56,11 @@ class NotificationFragment : Fragment() {
                 notificationHandler.cancelAllNotifications(fragmentPosition)
             }
             sendNotificationButton.setOnClickListener {
-                notificationHandler.sendNotification(fragmentPosition)
+                permissionHandler?.let {
+                    if (permissionHandler.isPermissionGranted)
+                        notificationHandler.sendNotification(fragmentPosition)
+                    else permissionHandler.requestPermission()
+                }
             }
 
             if (fragmentPosition == 0) {

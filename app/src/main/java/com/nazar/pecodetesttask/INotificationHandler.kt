@@ -35,7 +35,7 @@ interface INotificationHandler {
                 })
             }
 
-            val pendingIntent = PendingIntent.getActivity(context, channelId, notificationIntent, PendingIntent.FLAG_UPDATE_CURRENT)
+            val pendingIntent = PendingIntent.getActivity(context, channelId, notificationIntent, PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE)
 
             val notification = NotificationCompat.Builder(context, channelId.toString())
                 .setSmallIcon(R.drawable.default_notification_icon)
